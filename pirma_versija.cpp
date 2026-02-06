@@ -15,7 +15,7 @@ struct studentai
     vector<int> nd;
     double ndVidurkis;
     int egzaminas;
-    double galutinis;
+    double galutinis_vid, galutinis_med;
 };
 
 void inputas(vector<studentai> &grupe)
@@ -42,10 +42,24 @@ void inputas(vector<studentai> &grupe)
             A.nd.push_back(x);
         }
         A.ndVidurkis = (double)sum / n;
+
         cout << "iveskite egzamino pazymi: ";
         cin >> A.egzaminas;
 
-        A.galutinis = 0.4 * A.ndVidurkis + 0.6 * A.egzaminas;
+        sort(A.nd.begin(), A.nd.end());
+        double median;
+        if (n % 2 == 0)
+        {
+            median = (A.nd[n / 2 - 1] + A.nd[n / 2]) / 2.0;
+        }
+        else
+        {
+            median = A.nd[n / 2];
+        }
+
+        A.galutinis_med = 0.4 * median + 0.6 * A.egzaminas;
+        A.galutinis_vid = 0.4 * A.ndVidurkis + 0.6 * A.egzaminas;
+
         grupe.push_back(A);
         A.nd.clear();
     }
@@ -54,8 +68,8 @@ void outputas(vector<studentai> &grupe)
 {
     for (const auto &A : grupe)
     {
-        cout << left << setw(10) << A.vardas << left << setw(20) << A.pavarde << endl;
-        cout << setw(10) << A.galutinis << endl;
+        cout << left << setw(10) << A.vardas << left << setw(10) << A.pavarde;
+        cout << left << setw(10) << A.galutinis_vid << setw(10) << A.galutinis_med << endl;
     }
 }
 int main()
