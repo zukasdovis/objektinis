@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
-
+#include <cstdlib>
+#include <ctime>
 using std::cin;
 using std::cout;
 using std::endl;
@@ -20,36 +21,72 @@ struct studentai
 
 void inputas(vector<studentai> &grupe)
 {
-    
-    
+
     while (true)
     {
         studentai A;
         cout << "Iveskite varda ir pavarde, kad baigtumete, iveskite \"0 0\": ";
         cin >> A.vardas >> A.pavarde;
 
-        if(A.vardas == "0" && A.pavarde == "0"){
+        if (A.vardas == "0" && A.pavarde == "0")
+        {
             break;
         }
 
+        srand(time(0));
+
+        cout << " Ar norite generuoti atsitiktinius pazymius? (1 - taip, 0 - ne) ";
+
+        int tikr;
+        cin >> tikr;
         int sum = 0;
-        int n=0;
-        cout << "Iveskite mokinio pazymius, kad baigtumete, iveskite skaiciu daugiau uz 10: ";
-        while(true){
-            int x;
-            cin >> x;
-            if(x>10){
-                break;
+        int n = 0;
+
+        if (tikr == 0)
+        {
+
+            cout << "Iveskite mokinio pazymius, kad baigtumete, iveskite skaiciu daugiau uz 10: ";
+            while (true)
+            {
+                int x;
+                cin >> x;
+
+                if (x > 10)
+                {
+                    break;
+                }
+                sum += x;
+                n++;
+                A.nd.push_back(x);
             }
-            sum += x;
-            n++;
-            A.nd.push_back(x);
+
+            A.ndVidurkis = (double)sum / n;
+
+            cout << "iveskite egzamino pazymi: ";
+            cin >> A.egzaminas;
         }
+        else
+        {
 
-        A.ndVidurkis = (double)sum / n;
+            cout << "Iveskite kiek pazymiu norite sugeneruoti: ";
+            int kiek = 0;
+            cin >> kiek;
+            while (kiek--)
+            {
+                int x;
+                x = rand() % 11;
+                cout << x << " ";
+                n++;
+                sum += x;
+                A.nd.push_back(x);
+            }
 
-        cout << "iveskite egzamino pazymi: ";
-        cin >> A.egzaminas;
+            A.ndVidurkis = (double)sum / n;
+
+            cout << "Sugeneruotas egzamino pazymys: ";
+            A.egzaminas = rand() % 11;
+            cout << A.egzaminas << endl;
+        }
 
         sort(A.nd.begin(), A.nd.end());
         double median;
@@ -68,10 +105,6 @@ void inputas(vector<studentai> &grupe)
         grupe.push_back(A);
         A.nd.clear();
     }
-    
-
-
-   
 }
 void outputas(vector<studentai> &grupe)
 {
