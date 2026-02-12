@@ -8,171 +8,303 @@ using std::left;
 using std::right;
 using std::setw;
 using std::string;
-using std::vector;
+
+const string vardai[10] = {"Jonas", "Petras", "Antanas", "Kazys", "Stasys", "Mantas", "Rytis", "Darius", "Romas", "Linas"};
+const string pavardes[10] = {"Jonaitis", "Petraitis", "Antanaitis", "Kazlauskas", "Stasytis", "Mantys", "Rytys", "Dariuskas", "Romaitis", "Linaitis"};
 
 struct studentai
 {
     string vardas = "A", pavarde = "B";
     int *nd;
-    int n;
-    double ndVidurkis;
-    int egzaminas;
-    double galutinis_vid, galutinis_med;
+    int n = 0;
+    int cap = 0;
+    double ndVidurkis = 0.0;
+    int egzaminas = 0;
+    double galutinis_vid = 0.0, galutinis_med = 0.0;
 };
 
-void inputas(vector<studentai> &grupe)
+void push_back_nd(studentai &A, int x)
 {
+    if (A.n == A.cap)
+    {
+        int newCap = (A.cap == 0 ? 1 : A.cap * 2);
+        int *tmp = new int[newCap];
 
+        for (int i = 0; i < A.n; i++)
+            tmp[i] = A.nd[i];
+
+        delete[] A.nd;
+        A.nd = tmp;
+        A.cap = newCap;
+    }
+    A.nd[A.n++] = x;
+}
+/// VEDIMAS RANKA
+void ranka(studentai *&grupe, int &m, int &cap)
+{
     while (true)
     {
         studentai A;
+        A.nd = nullptr;
+        A.n = 0;
+        A.cap = 0;
+
         cout << "Iveskite varda ir pavarde, kad baigtumete, iveskite \"0 0\": ";
         cin >> A.vardas >> A.pavarde;
-
         if (A.vardas == "0" && A.pavarde == "0")
-        {
             break;
-        }
 
-        cout << " Ar norite generuoti atsitiktinius pazymius? (1 - taip, 0 - ne) ";
-
-        int tikr;
-        cin >> tikr;
         int sum = 0;
-        int n = 0;
-        /// Jei NENORI generuoti
-        if (tikr == 0)
+
+        cout << "Iveskite pazymius (iveskite skaiciu daugiau uz 10 kad baigtumete): ";
+        while (true)
         {
-            int dydis = 1;
-            int *tarp = new int[dydis];
-            cout << "Iveskite mokinio pazymius, kad baigtumete, iveskite skaiciu daugiau uz 10: ";
-            while (true)
-            {
-                int x;
-                cin >> x;
-
-                if (x > 10)
-                {
-                    break;
-                }
-                if (n == dydis)
-                {
-                    int *naujas = new int[dydis * 2];
-                    dydis *= 2;
-                    for (int i = 0; i < n; i++)
-                    {
-                        naujas[i] = tarp[i];
-                    }
-                    delete[] tarp;
-                    tarp = naujas;
-                }
-                sum += x;
-                n++;
-                tarp[n - 1] = x;
-            }
-            A.nd = tarp;
-            A.n = n;
-            if (n == 0)
-            {
-                A.ndVidurkis = 0;
-            }
-            else
-                A.ndVidurkis = (double)sum / n;
-
-            cout << "iveskite egzamino pazymi: ";
-            cin >> A.egzaminas;
+            int x;
+            cin >> x;
+            if (x > 10)
+                break;
+            sum += x;
+            push_back_nd(A, x);
         }
-        /// Jei nori GENERUOTI
+
+        cout << "Iveskite egzamino pazymi: ";
+        cin >> A.egzaminas;
+
+        // vidurkis
+        if (A.n == 0)
+        {
+            A.ndVidurkis = 0;
+        }
         else
         {
-
-            cout << "Iveskite kiek pazymiu norite sugeneruoti: ";
-            int kiek = 0;
-            cin >> kiek;
-            int *tarp = new int[kiek];
-            while (kiek--)
-            {
-                int x;
-                x = rand() % 11;
-                cout << x << " ";
-                n++;
-                sum += x;
-                tarp[n - 1] = x;
-            }
-            A.nd = tarp;
-            A.n = n;
-            if (n == 0)
-            {
-                A.ndVidurkis = 0;
-            }
-            else
-                A.ndVidurkis = (double)sum / n;
-
-            cout << "Sugeneruotas egzamino pazymys: ";
-            A.egzaminas = rand() % 11;
-            cout << A.egzaminas << endl;
+            A.ndVidurkis = (double)sum / A.n;
         }
 
+        // mediana
         sort(A.nd, A.nd + A.n);
-        double median;
+        double median = 0;
         if (A.n != 0)
         {
             if (A.n % 2 == 0)
             {
-                median = (A.nd[n / 2 - 1] + A.nd[n / 2]) / 2.0;
+                median = (A.nd[A.n / 2 - 1] + A.nd[A.n / 2]) / 2.0;
             }
             else
             {
-                median = A.nd[n / 2];
+                median = A.nd[A.n / 2];
             }
+        }
+
+        A.galutinis_vid = 0.4 * A.ndVidurkis + 0.6 * A.egzaminas;
+        A.galutinis_med = 0.4 * median + 0.6 * A.egzaminas;
+
+        if (m == cap)
+        {
+            int newCap = (cap == 0 ? 1 : cap * 2);
+            studentai *tmp = new studentai[newCap];
+            for (int i = 0; i < m; i++)
+                tmp[i] = grupe[i];
+            delete[] grupe;
+            grupe = tmp;
+            cap = newCap;
+        }
+        grupe[m++] = A;
+    }
+}
+/// AUTOMATINIS PAZYMIU GENERAVIMAS
+void pazymiu_gen(studentai *&grupe, int &m, int &cap)
+{
+    while (true)
+    {
+        studentai A;
+        A.nd = nullptr;
+        A.n = 0;
+        A.cap = 0;
+
+        cout << "Iveskite varda ir pavarde, kad baigtumete, iveskite \"0 0\": ";
+        cin >> A.vardas >> A.pavarde;
+        if (A.vardas == "0" && A.pavarde == "0")
+            break;
+
+        int sum = 0;
+
+        cout << "Iveskite kiek pazymiu generuoti: ";
+        int kiek = 0;
+        cin >> kiek;
+        while (kiek--)
+        {
+            int x = rand() % 11;
+            sum += x;
+            push_back_nd(A, x);
+        }
+
+        A.egzaminas = rand() % 11;
+
+        // vidurkis
+        if (A.n == 0)
+        {
+            A.ndVidurkis = 0;
         }
         else
         {
-            median = 0;
+            A.ndVidurkis = (double)sum / A.n;
         }
 
-        A.galutinis_med = 0.4 * median + 0.6 * A.egzaminas;
-        A.galutinis_vid = 0.4 * A.ndVidurkis + 0.6 * A.egzaminas;
+        // mediana
+        sort(A.nd, A.nd + A.n);
+        double median = 0;
+        if (A.n != 0)
+        {
+            if (A.n % 2 == 0)
+            {
+                median = (A.nd[A.n / 2 - 1] + A.nd[A.n / 2]) / 2.0;
+            }
+            else
+            {
+                median = A.nd[A.n / 2];
+            }
+        }
 
-        grupe.push_back(A);
+        A.galutinis_vid = 0.4 * A.ndVidurkis + 0.6 * A.egzaminas;
+        A.galutinis_med = 0.4 * median + 0.6 * A.egzaminas;
+
+        if (m == cap)
+        {
+            int newCap = (cap == 0 ? 1 : cap * 2);
+            studentai *tmp = new studentai[newCap];
+            for (int i = 0; i < m; i++)
+                tmp[i] = grupe[i];
+            delete[] grupe;
+            grupe = tmp;
+            cap = newCap;
+        }
+        grupe[m++] = A;
     }
 }
-void outputas(vector<studentai> &grupe)
+/// AUTOMATINIS VISKO GENERAVIMAS
+void visk_gen(studentai *&grupe, int &m, int &cap)
 {
-    for (const auto &A : grupe)
+    cout << "Iveskite kiek mokiniu vesite: ";
+    int stud = 0;
+    cin >> stud;
+    while (stud--)
     {
-        cout << left << setw(10) << A.vardas << left << setw(10) << A.pavarde;
-        cout << left << setw(10) << A.galutinis_vid << setw(10) << A.galutinis_med << endl;
+        studentai A;
+        A.nd = nullptr;
+        A.n = 0;
+        A.cap = 0;
+        int a = rand() % 10, b = rand() % 10;
+        A.vardas = vardai[a];
+        A.pavarde = pavardes[b];
+
+        int sum = 0;
+
+        cout << "Iveskite kiek pazymiu generuoti: ";
+        int kiek = 0;
+        cin >> kiek;
+        while (kiek--)
+        {
+            int x = rand() % 11;
+            sum += x;
+            push_back_nd(A, x);
+        }
+
+        A.egzaminas = rand() % 11;
+
+        // vidurkis
+        if (A.n == 0)
+        {
+            A.ndVidurkis = 0;
+        }
+        else
+        {
+            A.ndVidurkis = (double)sum / A.n;
+        }
+
+        // mediana
+        sort(A.nd, A.nd + A.n);
+        double median = 0;
+        if (A.n != 0)
+        {
+            if (A.n % 2 == 0)
+            {
+                median = (A.nd[A.n / 2 - 1] + A.nd[A.n / 2]) / 2.0;
+            }
+            else
+            {
+                median = A.nd[A.n / 2];
+            }
+        }
+
+        A.galutinis_vid = 0.4 * A.ndVidurkis + 0.6 * A.egzaminas;
+        A.galutinis_med = 0.4 * median + 0.6 * A.egzaminas;
+
+        if (m == cap)
+        {
+            int newCap = (cap == 0 ? 1 : cap * 2);
+            studentai *tmp = new studentai[newCap];
+            for (int i = 0; i < m; i++)
+                tmp[i] = grupe[i];
+            delete[] grupe;
+            grupe = tmp;
+            cap = newCap;
+        }
+        grupe[m++] = A;
     }
 }
-void trinimas(vector<studentai> &grupe)
+
+void outputas(studentai *grupe, int m)
 {
-    for (int i = 0; i < grupe.size(); i++)
+    cout << std::fixed << std::setprecision(2);
+    for (int i = 0; i < m; i++)
+    {
+        cout << left << setw(10) << grupe[i].vardas << left << setw(10) << grupe[i].pavarde;
+        cout << left << setw(10) << grupe[i].galutinis_vid << setw(10) << grupe[i].galutinis_med << endl;
+    }
+}
+/// TRINIMAS
+void trinimas(studentai *&grupe, int &m, int &cap)
+{
+    for (int i = 0; i < m; i++)
     {
         delete[] grupe[i].nd;
     }
+    delete[] grupe;
+    grupe = nullptr;
+    m = 0;
+    cap = 0;
 }
 
 int main()
 {
     srand(time(0));
-    vector<studentai> grupe;
-    bool iki = true;
-    while (iki)
+    studentai *grupe = nullptr;
+    int m = 0;
+    int cap = 0;
+    while (true)
     {
-        inputas(grupe);
-
-        outputas(grupe);
-
-        cout << "Ar yra dar grupiu? (1 - taip, 0 - ne) ";
+        cout << "MENIU: 1-ranka, 2-pazymiu generavimas, 3-generuoti studentu vardus,pavardes,pazymius, 4-baigti darba" << endl;
         int x;
         cin >> x;
-        if (x == 0)
+
+        if (x == 1)
         {
-            iki = false;
+            ranka(grupe, m, cap);
         }
+        else if (x == 2)
+        {
+            pazymiu_gen(grupe, m, cap);
+        }
+        else if (x == 3)
+        {
+            visk_gen(grupe, m, cap);
+        }
+        else
+            break;
+
+        outputas(grupe, m);
     }
-    trinimas(grupe);
+    trinimas(grupe, m, cap);
     cout << "Programa baige darba." << endl;
     return 0;
 }
