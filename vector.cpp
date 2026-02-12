@@ -173,8 +173,7 @@ void visk_gen(vector<studentai> &grupe)
         else
             A.ndVidurkis = (double)sum / n;
 
-        cout << "Iveskite egzamino pazymi: ";
-        cin >> A.egzaminas;
+        A.egzaminas = rand() % 11;
 
         sort(A.nd.begin(), A.nd.end());
         double median;
