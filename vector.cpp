@@ -17,9 +17,9 @@ struct studentai
 {
     string vardas = "A", pavarde = "B";
     vector<int> nd;
-    double ndVidurkis;
-    int egzaminas;
-    double galutinis_vid, galutinis_med;
+    double ndVidurkis = 0.0;
+    int egzaminas = 0;
+    double galutinis_vid = 0.0, galutinis_med = 0.0;
 };
 /// VISKAS VESTI RANKA
 void ranka(vector<studentai> &grupe)
@@ -150,7 +150,7 @@ void visk_gen(vector<studentai> &grupe)
     while (stud--)
     {
         studentai A;
-        int a = rand() % 11 - 1, b = rand() % 11 - 1;
+        int a = rand() % 10, b = rand() % 10;
 
         A.vardas = vardai[a];
         A.pavarde = pavardes[b];
@@ -201,6 +201,7 @@ void visk_gen(vector<studentai> &grupe)
 }
 void outputas(vector<studentai> &grupe)
 {
+    cout << std::fixed << std::setprecision(2);
     for (const auto &A : grupe)
     {
         cout << left << setw(10) << A.vardas << left << setw(10) << A.pavarde;
@@ -214,7 +215,7 @@ int main()
     bool iki = true;
     while (true)
     {
-        cout << "MENIU: 1-ranka, 2-pazymiu generavimas, generuoti studentu vardus,pavardes,pazymius, 4- baigti darba" << endl;
+        cout << "MENIU: 1-ranka, 2-pazymiu generavimas, 3-generuoti studentu vardus,pavardes,pazymius, 4-baigti darba" << endl;
         int x;
         cin >> x;
 
