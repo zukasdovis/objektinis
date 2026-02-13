@@ -8,6 +8,7 @@ using std::left;
 using std::right;
 using std::setw;
 using std::string;
+using std::sort;
 
 const string vardai[10] = {"Jonas", "Petras", "Antanas", "Kazys", "Stasys", "Mantas", "Rytis", "Darius", "Romas", "Linas"};
 const string pavardes[10] = {"Jonaitis", "Petraitis", "Antanaitis", "Kazlauskas", "Stasytis", "Mantys", "Rytys", "Dariuskas", "Romaitis", "Linaitis"};
