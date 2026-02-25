@@ -199,7 +199,9 @@ void visk_gen(vector<studentai> &grupe)
         grupe.push_back(A);
     }
 }
-void failu_nusk(vector<studentai> &grupe,string failas)
+
+/// NUSKAITYMAS IS FAILO
+void failu_nusk(vector<studentai> &grupe, string failas)
 {
     ifstream fd(failas);
     if (!fd)
@@ -262,16 +264,21 @@ void failu_nusk(vector<studentai> &grupe,string failas)
     }
 }
 
-bool pagalVarda(studentai &A, studentai &B){
+/// RUSIAVIMAS
+bool pagalVarda(const studentai &A, const studentai &B)
+{
     return A.vardas < B.vardas;
 }
-bool pagalPavarde(studentai &A, studentai &B){
+bool pagalPavarde(const studentai &A, const studentai &B)
+{
     return A.pavarde < B.pavarde;
 }
-bool pagalGalutiniVid(studentai &A, studentai &B){
+bool pagalGalutiniVid(const studentai &A, const studentai &B)
+{
     return A.galutinis_vid < B.galutinis_vid;
 }
-bool pagalGalutiniMed(studentai &A, studentai &B){
+bool pagalGalutiniMed(const studentai &A, const studentai &B)
+{
     return A.galutinis_med < B.galutinis_med;
 }
 
@@ -284,6 +291,7 @@ void outputas(vector<studentai> &grupe)
         cout << left << setw(10) << A.galutinis_vid << setw(10) << A.galutinis_med << endl;
     }
 }
+
 int main()
 {
     srand(time(0));
