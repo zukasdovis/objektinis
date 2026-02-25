@@ -199,6 +199,67 @@ void visk_gen(vector<studentai> &grupe)
         grupe.push_back(A);
     }
 }
+void failu_nusk(vector<studentai> &grupe)
+{
+    ifstream fd("studentai.txt");
+    if (!fd)
+    {
+        cout << "Nepavyko atidaryti failo\n";
+        return;
+    }
+    string line, niekas;
+    int n = 0;
+    getline(fd, line);
+    stringstream ss(line);
+    while (ss >> niekas >> ws)
+    {
+        n++;
+    }
+
+    while (getline(fd, line))
+    {
+        studentai A;
+        stringstream ss(line);
+        ss >> A.vardas >> A.pavarde;
+        int sum = 0;
+        for (int i = 0; i < n - 1; i++)
+        {
+            int x;
+            ss >> x;
+            A.nd._push_back(x);
+            sum += x;
+        }
+        if (n == 0)
+        {
+            A.ndVidurkis = 0;
+        }
+        else
+            A.ndVidurkis = (double)sum / n;
+    }
+    sort(A.nd.begin(), A.nd.end());
+    double median;
+    if (n != 0)
+    {
+        if (n % 2 == 0)
+        {
+            median = (A.nd[n / 2 - 1] + A.nd[n / 2]) / 2.0;
+        }
+        else
+        {
+            median = A.nd[n / 2];
+        }
+    }
+    else
+    {
+        median = 0;
+    }
+    ss >> A.egzaminas;
+
+    A.galutinis_vid = 0.4 * A.ndVidurkis + 0.6 * A.egzaminas;
+    A.galutinis_med = 0.4 * median + 0.6 * A.egzaminas;
+    grupe.push_back(A);
+}
+}
 void outputas(vector<studentai> &grupe)
 {
     cout << std::fixed << std::setprecision(2);
