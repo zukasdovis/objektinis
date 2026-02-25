@@ -199,9 +199,9 @@ void visk_gen(vector<studentai> &grupe)
         grupe.push_back(A);
     }
 }
-void failu_nusk(vector<studentai> &grupe)
+void failu_nusk(vector<studentai> &grupe,string failas)
 {
-    ifstream fd("studentai.txt");
+    ifstream fd(failas);
     if (!fd)
     {
         cout << "Nepavyko atidaryti failo\n";
@@ -262,6 +262,19 @@ void failu_nusk(vector<studentai> &grupe)
     }
 }
 
+bool pagalVarda(studentai &A, studentai &B){
+    return A.vardas < B.vardas;
+}
+bool pagalPavarde(studentai &A, studentai &B){
+    return A.pavarde < B.pavarde;
+}
+bool pagalGalutiniVid(studentai &A, studentai &B){
+    return A.galutinis_vid < B.galutinis_vid;
+}
+bool pagalGalutiniMed(studentai &A, studentai &B){
+    return A.galutinis_med < B.galutinis_med;
+}
+
 void outputas(vector<studentai> &grupe)
 {
     cout << std::fixed << std::setprecision(2);
@@ -275,10 +288,10 @@ int main()
 {
     srand(time(0));
     vector<studentai> grupe;
-    bool iki = true;
+    grupe.reserve(1000000);
     while (true)
     {
-        cout << "MENIU: 1-ranka, 2-pazymiu generavimas, 3-generuoti studentu vardus,pavardes,pazymius, 4-baigti darba" << endl;
+        cout << "MENIU: 1-ranka, 2-pazymiu generavimas, 3-generuoti studentu vardus,pavardes,pazymius, 5-baigti darba, 4-nuskaityti is failo, 6-rusiuoti pagal varda, 7-rusiuoti pagal pavarde, 8-rusiuoti pagal galutini vidurki, 9-rusiuoti pagal galutini mediana" << endl;
         int x;
         cin >> x;
 
@@ -293,6 +306,29 @@ int main()
         else if (x == 3)
         {
             visk_gen(grupe);
+        }
+        else if (x == 4)
+        {
+            string failas;
+            cout << "Iveskite failo pavadinima: ";
+            cin >> failas;
+            failu_nusk(grupe, failas);
+        }
+        else if (x == 6)
+        {
+            sort(grupe.begin(), grupe.end(), pagalVarda);
+        }
+        else if (x == 7)
+        {
+            sort(grupe.begin(), grupe.end(), pagalPavarde);
+        }
+        else if (x == 8)
+        {
+            sort(grupe.begin(), grupe.end(), pagalGalutiniVid);
+        }
+        else if (x == 9)
+        {
+            sort(grupe.begin(), grupe.end(), pagalGalutiniMed);
         }
         else
             break;
