@@ -235,31 +235,33 @@ void failu_nusk(vector<studentai> &grupe)
         }
         else
             A.ndVidurkis = (double)sum / n;
-    }
-    sort(A.nd.begin(), A.nd.end());
-    double median;
-    if (n != 0)
-    {
-        if (n % 2 == 0)
+
+        sort(A.nd.begin(), A.nd.end());
+        double median;
+
+        if (n != 0)
         {
-            median = (A.nd[n / 2 - 1] + A.nd[n / 2]) / 2.0;
+            if (n % 2 == 0)
+            {
+                median = (A.nd[n / 2 - 1] + A.nd[n / 2]) / 2.0;
+            }
+            else
+            {
+                median = A.nd[n / 2];
+            }
         }
         else
         {
-            median = A.nd[n / 2];
+            median = 0;
         }
-    }
-    else
-    {
-        median = 0;
-    }
-    ss >> A.egzaminas;
+        ss >> A.egzaminas;
 
-    A.galutinis_vid = 0.4 * A.ndVidurkis + 0.6 * A.egzaminas;
-    A.galutinis_med = 0.4 * median + 0.6 * A.egzaminas;
-    grupe.push_back(A);
+        A.galutinis_vid = 0.4 * A.ndVidurkis + 0.6 * A.egzaminas;
+        A.galutinis_med = 0.4 * median + 0.6 * A.egzaminas;
+        grupe.push_back(A);
+    }
 }
-}
+
 void outputas(vector<studentai> &grupe)
 {
     cout << std::fixed << std::setprecision(2);
