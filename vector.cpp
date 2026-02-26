@@ -10,6 +10,9 @@ using std::right;
 using std::setw;
 using std::string;
 using std::vector;
+using std::ifstream;
+using std::stringstream;
+using std::ws;
 using namespace std::chrono;
 
 const string vardai[10] = {"Jonas", "Petras", "Antanas", "Kazys", "Stasys", "Mantas", "Rytis", "Darius", "Romas", "Linas"};
@@ -296,16 +299,13 @@ void outputas(vector<studentai> &grupe)
     cout << std::fixed << std::setprecision(2);
     for (const auto &A : grupe)
     {
-        cout << left << setw(10) << A.vardas << left << setw(10) << A.pavarde;
-        cout << left << setw(10) << A.galutinis_vid << setw(10) << A.galutinis_med << endl;
+        cout << left << setw(20) << A.vardas << left << setw(20) << A.pavarde;
+        cout << left << setw(20) << A.galutinis_vid << setw(20) << A.galutinis_med << endl;
     }
 }
 
 int main()
 {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-
     srand(time(0));
 
     vector<studentai> grupe;
