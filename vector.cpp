@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 #include <cstdlib>
 #include <ctime>
+#include <chrono>
 using std::cin;
 using std::cout;
 using std::endl;
@@ -9,6 +10,7 @@ using std::right;
 using std::setw;
 using std::string;
 using std::vector;
+using namespace std::chrono;
 
 const string vardai[10] = {"Jonas", "Petras", "Antanas", "Kazys", "Stasys", "Mantas", "Rytis", "Darius", "Romas", "Linas"};
 const string pavardes[10] = {"Jonaitis", "Petraitis", "Antanaitis", "Kazlauskas", "Stasytis", "Mantys", "Rytys", "Dariuskas", "Romaitis", "Linaitis"};
@@ -203,6 +205,8 @@ void visk_gen(vector<studentai> &grupe)
 /// NUSKAITYMAS IS FAILO
 void failu_nusk(vector<studentai> &grupe, string failas)
 {
+    auto start = high_resolution_clock::now();
+
     ifstream fd(failas);
     if (!fd)
     {
@@ -213,22 +217,23 @@ void failu_nusk(vector<studentai> &grupe, string failas)
     int n = 0;
     getline(fd, line);
     stringstream ss(line);
+    ss >> niekas >> ws >> niekas >> ws;
     while (ss >> niekas >> ws)
     {
         n++;
     }
-
+    n--;
     while (getline(fd, line))
     {
         studentai A;
         stringstream ss(line);
         ss >> A.vardas >> A.pavarde;
         int sum = 0;
-        for (int i = 0; i < n - 1; i++)
+        for (int i = 0; i < n; i++)
         {
             int x;
             ss >> x;
-            A.nd._push_back(x);
+            A.nd.push_back(x);
             sum += x;
         }
         if (n == 0)
@@ -262,6 +267,10 @@ void failu_nusk(vector<studentai> &grupe, string failas)
         A.galutinis_med = 0.4 * median + 0.6 * A.egzaminas;
         grupe.push_back(A);
     }
+    auto end = high_resolution_clock::now();
+    duration<double> diff = end - start;
+    cout << "10 000 000 elementų užpildymas užtruko: " << diff.count() << " s\n";
+    cout << "10 000 000 elementų užpildymas užtruko: " << duration_cast<milliseconds>(end - start).count() << " msec\n";
 }
 
 /// RUSIAVIMAS
@@ -294,7 +303,11 @@ void outputas(vector<studentai> &grupe)
 
 int main()
 {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
     srand(time(0));
+
     vector<studentai> grupe;
     grupe.reserve(1000000);
     while (true)
