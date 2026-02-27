@@ -5,13 +5,14 @@
 using std::cin;
 using std::cout;
 using std::endl;
+using std::ifstream;
 using std::left;
+using std::ofstream;
 using std::right;
 using std::setw;
 using std::string;
-using std::vector;
-using std::ifstream;
 using std::stringstream;
+using std::vector;
 using std::ws;
 using namespace std::chrono;
 
@@ -29,10 +30,11 @@ struct studentai
 /// VISKAS VESTI RANKA
 void ranka(vector<studentai> &grupe)
 {
-    studentai A;
+    
 
     while (true)
-    {
+    {   
+        studentai A;
         cout << "Iveskite varda ir pavarde, kad baigtumete, iveskite \"0 0\": ";
         cin >> A.vardas >> A.pavarde;
         if (A.vardas == "0" && A.pavarde == "0")
@@ -299,9 +301,21 @@ void outputas(vector<studentai> &grupe)
     cout << std::fixed << std::setprecision(2);
     for (const auto &A : grupe)
     {
-        cout << left << setw(20) << A.vardas << left << setw(20) << A.pavarde;
-        cout << left << setw(20) << A.galutinis_vid << setw(20) << A.galutinis_med << endl;
+        cout << left << setw(10) << A.vardas << left << setw(10) << A.pavarde;
+        cout << left << setw(10) << A.galutinis_vid << setw(10) << A.galutinis_med << endl;
     }
+}
+
+void outputas_fr(vector<studentai> &grupe)
+{
+    ofstream fr("rezultatai.txt");
+    fr << std::fixed << std::setprecision(2);
+    for (const auto &A : grupe)
+    {
+        fr << left << setw(10) << A.vardas << left << setw(10) << A.pavarde;
+        fr << left << setw(10) << A.galutinis_vid << setw(10) << A.galutinis_med << endl;
+    }
+    fr.close();
 }
 
 int main()
@@ -312,7 +326,7 @@ int main()
     grupe.reserve(1000000);
     while (true)
     {
-        cout << "MENIU: 1-ranka, 2-pazymiu generavimas, 3-generuoti studentu vardus,pavardes,pazymius, 5-baigti darba, 4-nuskaityti is failo, 6-rusiuoti pagal varda, 7-rusiuoti pagal pavarde, 8-rusiuoti pagal galutini vidurki, 9-rusiuoti pagal galutini mediana" << endl;
+        cout << "MENIU: 1-ranka, 2-pazymiu generavimas, 3-generuoti studentu vardus,pavardes,pazymius, 5-baigti darba, 4-nuskaityti is failo, 6-rusiuoti pagal varda, 7-rusiuoti pagal pavarde, 8-rusiuoti pagal galutini vidurki, 9-rusiuoti pagal galutini mediana, 10-isvesti i faila, 11-isvesti i ekrana" << endl;
         int x;
         cin >> x;
 
@@ -330,6 +344,7 @@ int main()
         }
         else if (x == 4)
         {
+            cout << 1;
             string failas;
             cout << "Iveskite failo pavadinima: ";
             cin >> failas;
@@ -351,10 +366,16 @@ int main()
         {
             sort(grupe.begin(), grupe.end(), pagalGalutiniMed);
         }
+        else if (x == 10)
+        {
+            outputas_fr(grupe);
+        }
+        else if (x == 11)
+        {
+            outputas(grupe);
+        }
         else
             break;
-
-        outputas(grupe);
     }
     cout << "Programa baige darba." << endl;
     return 0;
