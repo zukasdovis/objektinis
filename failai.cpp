@@ -5,7 +5,14 @@
 #include <algorithm>
 #include <stdexcept>
 
-using namespace std;
+using std::exception;
+using std::ifstream;
+using std::ofstream;
+using std::runtime_error;
+using std::string;
+using std::stringstream;
+using std::vector;
+using std::ws;
 
 void failu_nusk(vector<studentai> &grupe, string failas)
 {
