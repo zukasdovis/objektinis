@@ -3,7 +3,17 @@
 #include <fstream>
 #include <iomanip>
 
-using namespace std;
+using std::cout;
+using std::endl;
+using std::fixed;
+using std::left;
+using std::ofstream;
+using std::right;
+using std::setprecision;
+using std::setw;
+using std::string;
+using std::stringstream;
+using std::vector;
 
 void outputas(vector<studentai> &grupe)
 {
