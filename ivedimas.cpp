@@ -3,7 +3,13 @@
 #include <algorithm>
 #include <stdexcept>
 
-using namespace std;
+using std::cin;
+using std::cout;
+using std::exception;
+using std::runtime_error;
+using std::string;
+using std::stringstream;
+using std::vector;
 
 void ranka(vector<studentai> &grupe)
 {
@@ -70,7 +76,7 @@ void pazymiu_gen(vector<studentai> &grupe)
         studentai A;
 
         cout << "Iveskite varda pavarde (0 0 - baigti): ";
-      
+
         if (!(cin >> A.vardas >> A.pavarde))
             throw runtime_error("Klaida ivestyje");
 
