@@ -6,7 +6,21 @@
 #include "rusiavimas.h"
 #include "output.h"
 
-using namespace std;
+using std::cin;
+using std::cout;
+using std::endl;
+using std::ifstream;
+using std::left;
+using std::ofstream;
+using std::right;
+using std::setw;
+using std::string;
+using std::stringstream;
+using std::vector;
+using std::ws;
+using namespace std::chrono;
+using std::exception;
+using std::runtime_error;
 
 int main()
 {
