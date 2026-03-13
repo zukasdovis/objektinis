@@ -5,6 +5,7 @@
 #include "failai.h"
 #include "rusiavimas.h"
 #include "output.h"
+#include "generatorius.h"
 
 using std::cin;
 using std::cout;
@@ -32,7 +33,7 @@ int main()
     {
         cout << "1-ranka 2-generuoti pazymius 3-viska generuoti 4-skaityti faila\n";
         cout << "6-rusiuoti varda 7-pavarde 8-vidurkis 9-mediana\n";
-        cout << "10-i faila 11-i ekrana 5-baigti\n";
+        cout << "10-i faila 11-i ekrana 12-generuoti failus 5-baigti\n";
 
         int x;
 
@@ -89,6 +90,8 @@ int main()
             else if (x == 11)
                 outputas(grupe);
 
+            else if (x == 12)
+                generuotiVisus();
             else
                 break;
         }
