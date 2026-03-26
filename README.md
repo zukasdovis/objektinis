@@ -1,4 +1,6 @@
-Deque
+## 1 strategija
+
+### Deque
 
 1000
 
@@ -35,7 +37,7 @@ Faila rusiuoti uztruko 2.768 s
 Faila irasyti uztruko 11.485 s
 Programa uztruko44.206 s
 
-List
+### List
 
 1000
 
@@ -72,7 +74,7 @@ Faila rusiuoti uztruko 0 s
 Faila irasyti uztruko 0.021 s
 Programa uztruko36.649 s
 
-Vector
+### Vector
 
 1000 
 
@@ -108,3 +110,71 @@ Faila nuskaite per 60.129 s
 Faila rusiuoti uztruko 11.309 s 
 Faila irasyti uztruko 10.895 s 
 Programa uztruko 82.333 s
+
+## 2 Strategija
+
+### Vecor
+
+1000
+
+Faila rusiuoti uztruko 0.072 s
+
+10000
+
+Faila rusiuoti uztruko 3.267 s
+
+100000
+
+Faila rusiuoti uztruko 0.285 s
+
+1000000
+
+Faila rusiuoti uztruko 6.604 s
+
+10000000
+
+Faila rusiuoti uztruko 50.557 s
+
+### Deque
+
+1000
+
+Faila rusiuoti uztruko 0.003 s
+
+10000
+
+Faila rusiuoti uztruko 0.027 s
+
+100000
+
+Faila rusiuoti uztruko 0.354 s
+
+1000000
+
+Faila rusiuoti uztruko 4.715 s
+
+10000000
+
+Faila rusiuoti uztruko 73.127 s
+
+### List
+
+1000
+
+Faila rusiuoti uztruko 0 s
+
+10000
+
+Faila rusiuoti uztruko 0 s
+
+100000
+
+Faila rusiuoti uztruko 0 s
+
+1000000
+
+Faila rusiuoti uztruko 0 s
+
+10000000
+
+Faila rusiuoti uztruko 0 s
