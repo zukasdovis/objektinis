@@ -1,3 +1,51 @@
+# Projekto aprašymas
+Programa skirta studentų akademinių pasiekimų informacijos apdorojimui. Vartotojas gali rinktis, ar studentų informaciją įveda jis pats, ar informacija yra generuojama automatiškai. Programa leidžia generuoti, nuskaityti studentų failus bei atlikti skirtingus programos veikimo laiko testus. Programos veikimo spartos testavimui naudojami skirtingi konteineriai.
+
+# Naudojimosi instrukcija
+1. Nusiklonuokite repozitoriją:
+   
+   ```
+   git clone https://github.com/zukasdovis/objektinis.git
+   ```
+
+2. Įsidiekite CMake (Linux(Ubuntu/Debian))
+
+   ```
+   sudo apt update
+   sudo apt install cmake
+   ```
+
+3. Projekto kompiliavimas su CMake
+   
+   ```
+   cd OOP-1
+   mkdir build
+   cd build
+   cmake ..
+   make
+   ```
+4. Paleiskite programą
+   
+   ```
+   ./programa1
+   ```
+   
+# Kompiuterio specifikacijos:
+
+|       CPU      |  RAM |    SSD     | 
+|----------------|------|------------| 
+| Intel i5-12450HX | 16GB | NVMe 256GB |      
+--------------------------------------
+
+# Tyrimo rezultatai:
+
+- Šiame tyrime analizuojamas skirtingų konteinerių (vector, list, deque) efektyvumas apdorojant studentų duomenis.
+- Eksperimentuose naudojami skirtingo dydžio failai (nuo 1000 iki 10000000 studentų įrašų)
+- Pirmoje strategijoje studentai yra padalinami į du naujus konteinerius
+- Antroje strategijoje iš bendro studentų koneteinerio į naują konteinerį yra perkeliami tik nepažangūs studentai ir jie tuo pačaiu yra ištrinami iš pagrindinio konteinerio. Tai sutaupo atminties.
+- Trečioje strategijoje, taip pat, iš bendro studentų koneteinerio į naują konteinerį yra perkeliami tik nepažangūs studentai ir jie tuo pačiu yra ištrinami iš pagrindinio konteinerio, bet šiuo atveju yra naudojami efektyvūs algoritmai
+
+
 # 1 Strategija, pilnas tyrimas
 | Container | Size       | Read (s) | Sort (s) | Write (s) | Total (s) |
 | --------- | ---------- | -------- | -------- | --------- | --------- |
