@@ -165,16 +165,16 @@ Faila rusiuoti uztruko 0 s
 
 10000
 
-Faila rusiuoti uztruko 0 s
+Faila rusiuoti uztruko 0.005 s
 
 100000
 
-Faila rusiuoti uztruko 0 s
+Faila rusiuoti uztruko 0.109 s
 
 1000000
 
-Faila rusiuoti uztruko 0 s
+Faila rusiuoti uztruko 1.324 s
 
 10000000
 
-Faila rusiuoti uztruko 0 s
+Faila rusiuoti uztruko 28.173 s
