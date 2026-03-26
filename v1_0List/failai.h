@@ -6,6 +6,6 @@
 #include <string>
 #include <list>
 
-void failu_nusk(std::list<studentai> grupe, std::string failas);
+void failu_nusk(std::list<studentai> &grupe, std::string failas);
 
 #endif
