@@ -21,13 +21,14 @@ bool pagalGalutiniMed(const studentai &A, const studentai &B)
 }
 
 template <typename Container>
-void splitContainer(Container &grupe, Container &kietiakai)
+void splitContainer(Container &grupe, Container &silpniakai)
 {
     auto it = std::partition(grupe.begin(), grupe.end(), [](const studentai &s)
                              { return s.galutinis_vid >= 5.0; });
-    kietiakai.insert(kietiakai.end(), it, grupe.end());
+    silpniakai.insert(silpniakai.end(), it, grupe.end());
     grupe.erase(it, grupe.end());
 }
+
 void failoRusiavimas1(int kiekis)
 {
     string failas = "studentai_" + to_string(kiekis) + ".txt";
@@ -100,23 +101,20 @@ void failoRusiavimas1(int kiekis)
     ofstream kietiakaiF(kietiakaiFailas);
     ofstream silpniakaiF(silpniakaiFailas);
 
-    kietiakaiF << "Vardas Pavarde ND1 ND2 ND3 ND4 ND5 ND6 ND7 ND8 ND9 ND10 Galutinis\n";
+    kietiakaiF << "Vardas Pavarde GalutinisMed GalutinisVid\n";
     for (auto &x : kietiakai)
     {
-
         kietiakaiF << x.vardas << " " << x.pavarde << " ";
-        for (auto &y : x.nd)
-            kietiakaiF << y << " ";
-        kietiakaiF << x.egzaminas << "\n";
+
+        kietiakaiF << x.galutinis_med << " " << x.galutinis_vid << "\n";
     }
 
-    silpniakaiF << "Vardas Pavarde ND1 ND2 ND3 ND4 ND5 ND6 ND7 ND8 ND9 ND10 Galutinis\n";
+    silpniakaiF << "Vardas Pavarde GalutinisMed GalutinisVid\n";
     for (auto &x : silpniakai)
     {
         silpniakaiF << x.vardas << " " << x.pavarde << " ";
-        for (auto &y : x.nd)
-            silpniakaiF << y << " ";
-        silpniakaiF << x.egzaminas << "\n";
+
+        silpniakaiF << x.galutinis_med << " " << x.galutinis_vid << "\n";
     }
     clock_t end2 = clock();
     double laikas3 = double(end2 - start2) / CLOCKS_PER_SEC;
@@ -196,23 +194,20 @@ void failoRusiavimas2(int kiekis)
     ofstream kietiakaiF(kietiakaiFailas);
     ofstream silpniakaiF(silpniakaiFailas);
 
-    kietiakaiF << "Vardas Pavarde ND1 ND2 ND3 ND4 ND5 ND6 ND7 ND8 ND9 ND10 Galutinis\n";
+    kietiakaiF << "Vardas Pavarde GalutinisMed GalutinisVid\n";
     for (auto &x : kietiakai)
     {
-
         kietiakaiF << x.vardas << " " << x.pavarde << " ";
-        for (auto &y : x.nd)
-            kietiakaiF << y << " ";
-        kietiakaiF << x.egzaminas << "\n";
+
+        kietiakaiF << x.galutinis_med << " " << x.galutinis_vid << "\n";
     }
 
-    silpniakaiF << "Vardas Pavarde ND1 ND2 ND3 ND4 ND5 ND6 ND7 ND8 ND9 ND10 Galutinis\n";
+    silpniakaiF << "Vardas Pavarde GalutinisMed GalutinisVid\n";
     for (auto &x : grupe)
     {
         silpniakaiF << x.vardas << " " << x.pavarde << " ";
-        for (auto &y : x.nd)
-            silpniakaiF << y << " ";
-        silpniakaiF << x.egzaminas << "\n";
+
+        silpniakaiF << x.galutinis_med << " " << x.galutinis_vid << "\n";
     }
     clock_t end2 = clock();
     double laikas3 = double(end2 - start2) / CLOCKS_PER_SEC;
@@ -235,11 +230,11 @@ void failoRusiavimas3(int kiekis)
 
     cout << "Faila nuskaite per " << laikas1 << " s\n";
 
-    list<studentai> kietiakai;
+    list<studentai> silpniakai;
 
     clock_t start1 = clock();
 
-    splitContainer(grupe, kietiakai);
+    splitContainer(grupe, silpniakai);
 
     clock_t end1 = clock();
     double laikas2 = double(end1 - start1) / CLOCKS_PER_SEC;
@@ -253,19 +248,19 @@ void failoRusiavimas3(int kiekis)
     {
     case 1:
         grupe.sort(pagalVarda);
-        kietiakai.sort(pagalVarda);
+        silpniakai.sort(pagalVarda);
         break;
     case 2:
         grupe.sort(pagalPavarde);
-        kietiakai.sort(pagalPavarde);
+        silpniakai.sort(pagalPavarde);
         break;
     case 3:
         grupe.sort(pagalGalutiniVid);
-        kietiakai.sort(pagalGalutiniVid);
+        silpniakai.sort(pagalGalutiniVid);
         break;
     case 4:
         grupe.sort(pagalGalutiniMed);
-        kietiakai.sort(pagalGalutiniMed);
+        silpniakai.sort(pagalGalutiniMed);
         break;
     default:
         cout << "Neteisinga ivestis\n";
@@ -280,23 +275,20 @@ void failoRusiavimas3(int kiekis)
     ofstream kietiakaiF(kietiakaiFailas);
     ofstream silpniakaiF(silpniakaiFailas);
 
-    kietiakaiF << "Vardas Pavarde ND1 ND2 ND3 ND4 ND5 ND6 ND7 ND8 ND9 ND10 Galutinis\n";
-    for (auto &x : kietiakai)
-    {
-
-        kietiakaiF << x.vardas << " " << x.pavarde << " ";
-        for (auto &y : x.nd)
-            kietiakaiF << y << " ";
-        kietiakaiF << x.egzaminas << "\n";
-    }
-
-    silpniakaiF << "Vardas Pavarde ND1 ND2 ND3 ND4 ND5 ND6 ND7 ND8 ND9 ND10 Galutinis\n";
+    kietiakaiF << "Vardas Pavarde GalutinisMed GalutinisVid\n";
     for (auto &x : grupe)
     {
+        kietiakaiF << x.vardas << " " << x.pavarde << " ";
+
+        kietiakaiF << x.galutinis_med << " " << x.galutinis_vid << "\n";
+    }
+
+    silpniakaiF << "Vardas Pavarde GalutinisMed GalutinisVid\n";
+    for (auto &x : silpniakai)
+    {
         silpniakaiF << x.vardas << " " << x.pavarde << " ";
-        for (auto &y : x.nd)
-            silpniakaiF << y << " ";
-        silpniakaiF << x.egzaminas << "\n";
+
+        silpniakaiF << x.galutinis_med << " " << x.galutinis_vid << "\n";
     }
     clock_t end2 = clock();
     double laikas3 = double(end2 - start2) / CLOCKS_PER_SEC;
